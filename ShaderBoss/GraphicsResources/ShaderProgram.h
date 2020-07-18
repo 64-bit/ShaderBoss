@@ -1,6 +1,9 @@
 #pragma once
 #include "OSTemp/Files.h"
 #include "GraphicsResources/GLTypes.h"
+#include <vector>
+
+class ShaderUniformBase;
 
 //Represents a fully linked vertex and fragment shader
 class ShaderProgram
@@ -15,9 +18,17 @@ public:
 
 	void Bind();
 
+	const std::vector<ShaderUniformBase*>* GetUniforms();
+
 private:
 
+	std::vector<ShaderUniformBase*> _shaderUniforms;
+
 	ShaderProgram(const char* vertexShader, const char* fragmentShader);
+
+	void BindAttributes();
+
+	void BindUniforms();
 
 	GLuint _vertexShader;
 	GLuint _fragmentShader;

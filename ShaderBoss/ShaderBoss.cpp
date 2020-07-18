@@ -6,6 +6,9 @@
 #include "glad/glad.h"
 #include "UI/GlDebugWindow.h"
 #include "UI/GlStats.h"
+#include "OSTemp/OSFileSystemWrapper.h"
+#include <iostream>
+#include "GraphicsResources/ShaderDebugWindow.h"
 
 static unsigned int VAO;
 
@@ -27,6 +30,7 @@ void TextureBoss::Init()
 
 
 
+
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
@@ -34,7 +38,8 @@ void TextureBoss::Init()
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 3, data, GL_STATIC_DRAW);
 
-
+	auto debugWindow = new ShaderDebugWindow(_backgroundShader);
+	_windowManager->OpenWindow(debugWindow);
 }
 
 void TextureBoss::MenuBar()
@@ -46,7 +51,10 @@ void TextureBoss::MenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Open", "CTRL+Z")) {}
+			if (ImGui::MenuItem("Open", "CTRL+Z"))
+			{
+				ShaderBoss::OSFileSystemWrapper::LoadFileDialoug("asdf");
+			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Exit"))
 			{
@@ -78,6 +86,24 @@ void TextureBoss::MenuBar()
 			ImGui::Separator();
 			ImGui::MenuItem("Export To Shader");
 			ImGui::MenuItem("Export To PNG");
+			ImGui::EndMenu();
+		}
+		if(ImGui::BeginMenu("Shader Source"))
+		{
+			if (ImGui::MenuItem("Load All"))
+			{
+				auto str = ShaderBoss::OSFileSystemWrapper::LoadFileDialoug("asdf");
+				std::cout << str.c_str();
+			}
+			ImGui::Separator();
+			if (ImGui::MenuItem("Vertex Shader"))
+			{
+
+			}
+			if (ImGui::MenuItem("Fragment Shader"))
+			{
+
+			}
 			ImGui::EndMenu();
 		}
 		if(ImGui::BeginMenu("Help"))

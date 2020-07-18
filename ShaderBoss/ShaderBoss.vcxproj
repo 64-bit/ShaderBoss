@@ -165,9 +165,12 @@
     <ClInclude Include="glad\Docs.h" />
     <ClInclude Include="glad\include\glad\glad.h" />
     <ClInclude Include="glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="GraphicsResources\GLEnumsToString.h" />
     <ClInclude Include="GraphicsResources\GlobalShaderUniforms.h" />
     <ClInclude Include="GraphicsResources\GLTypes.h" />
+    <ClInclude Include="GraphicsResources\ShaderDebugWindow.h" />
     <ClInclude Include="GraphicsResources\ShaderProgram.h" />
+    <ClInclude Include="GraphicsResources\ShaderUniform.h" />
     <ClInclude Include="imgui\examples\imgui_impl_glfw.h" />
     <ClInclude Include="imgui\examples\imgui_impl_opengl3.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -180,8 +183,11 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="imnodes\imnodes.h" />
     <ClInclude Include="OSTemp\Files.h" />
+    <ClInclude Include="OSTemp\OSFileSystemWrapper.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ShaderBoss.h" />
+    <ClInclude Include="ShaderBoss\ApplicationState.h" />
+    <ClInclude Include="ShaderBoss\ProjectState.h" />
     <ClInclude Include="UI\AboutBox.h" />
     <ClInclude Include="UI\GlDebugWindow.h" />
     <ClInclude Include="UI\GlStats.h" />
@@ -190,7 +196,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad\src\glad.c" />
+    <ClCompile Include="GraphicsResources\GLEnumsToString.cpp" />
+    <ClCompile Include="GraphicsResources\ShaderDebugWindow.cpp" />
     <ClCompile Include="GraphicsResources\ShaderProgram.cpp" />
+    <ClCompile Include="GraphicsResources\ShaderUniform.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -199,6 +208,7 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="imnodes\imnodes.cpp" />
     <ClCompile Include="OSTemp\Files.cpp" />
+    <ClCompile Include="OSTemp\OSFileSystemWrapperWindows.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

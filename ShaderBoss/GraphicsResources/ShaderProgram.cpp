@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <cstring>
 #include <iostream>
+#include "ShaderUniform.h"
 
 ShaderProgram * ShaderProgram::CreateFromFiles(File & vertexShader, File & fragmentShader)
 {
@@ -11,7 +12,6 @@ ShaderProgram * ShaderProgram::CreateFromFiles(File & vertexShader, File & fragm
 ShaderProgram * ShaderProgram::CreateFromStrings(const char * vertexShader, const char * fragmentShader)
 {
 	return new ShaderProgram(vertexShader, fragmentShader);
-
 }
 
 int ShaderProgram::location(const char * loc)
@@ -22,7 +22,22 @@ int ShaderProgram::location(const char * loc)
 void ShaderProgram::Bind()
 {
 	glUseProgram(_shaderProgram);
+	BindUniforms();
 }
+
+const std::vector<ShaderUniformBase*>* ShaderProgram::GetUniforms()
+{
+	return &_shaderUniforms;
+}
+
+void ShaderProgram::BindUniforms()
+{
+	for(auto uniform : _shaderUniforms)
+	{
+		uniform->Bind();
+	}
+}
+
 
 ShaderProgram::ShaderProgram(const char* vertexShader, const char* fragmentShader)
 {
@@ -59,8 +74,7 @@ ShaderProgram::ShaderProgram(const char* vertexShader, const char* fragmentShade
 
 	_shaderProgram = glCreateProgram();
 
-	glBindAttribLocation(_shaderProgram, 0, "a_pos");
-	glBindAttribLocation(_shaderProgram, 1, "a_uv");
+	BindAttributes();
 
 	glAttachShader(_shaderProgram, _vertexShader);
 	glAttachShader(_shaderProgram, _fragmentShader);
@@ -72,5 +86,19 @@ ShaderProgram::ShaderProgram(const char* vertexShader, const char* fragmentShade
 		std::cout << "failed to link shader\n";
 	}
 
+	ShaderUniformBase::ExtractAllUniformsToVector(_shaderUniforms, _shaderProgram);
+
+
+	for(int i = 0; i < _shaderUniforms.size();i++)
+	{
+		printf("Uniform #%d -- %s\n", _shaderUniforms[i]->Index, _shaderUniforms[i]->Name.c_str());
+	}
+
 	std::cout << " Shader finished\n";
+}
+
+void ShaderProgram::BindAttributes()
+{
+	glBindAttribLocation(_shaderProgram, 0, "a_pos");
+	glBindAttribLocation(_shaderProgram, 1, "a_uv");
 }
